@@ -1,0 +1,13 @@
+[
+  {
+    "id": "bad-sentiment",
+    "title": "Bad sentiment sample",
+    "summary": null,
+    "content": null,
+    "published_at": "2026-04-01T10:00:00Z",
+    "expected_sentiment": "bullish",
+    "recorded_analysis": {
+      "sentiment": "positive"
+    }
+  }
+]

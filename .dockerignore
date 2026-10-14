@@ -1,0 +1,14 @@
+.git
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+.worktrees
+**/__pycache__/
+**/*.py[cod]
+apps/api/tests/.pytest_tmp/
+apps/api/tests/fixtures/tmp*/
+apps/web/node_modules/
+apps/web/.next/

@@ -1,0 +1,31 @@
+[project]
+name = "gold-agent-api"
+version = "0.1.0"
+description = "Gold-news research, bar-by-bar backtesting, and paper-trading API."
+license = "MIT"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+  "fastapi==0.104.1",
+  "alembic==1.16.2",
+  "celery[redis]==5.5.3",
+  "feedparser==6.0.11",
+  "httpx==0.28.1",
+  "ibapi==9.81.1.post1",
+  "optuna>=3.5",
+  "psycopg[binary]==3.2.9",
+  "scikit-learn>=1.4",
+  "sqlalchemy==2.0.43",
+  "uvicorn==0.35.0"
+]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["app*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+norecursedirs = [".pytest_tmp", "fixtures/tmp*"]

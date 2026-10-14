@@ -1,0 +1,166 @@
+services:
+  postgres-primary:
+    image: postgres:16-alpine
+    container_name: gold-agent-dr-postgres-primary
+    command:
+      - postgres
+      - -c
+      - wal_level=replica
+      - -c
+      - max_wal_senders=10
+      - -c
+      - max_replication_slots=10
+      - -c
+      - hot_standby=on
+    environment:
+      POSTGRES_DB: ${DR_POSTGRES_DB:-gold_agent_dr}
+      POSTGRES_USER: ${DR_POSTGRES_USER:-gold_agent}
+      POSTGRES_PASSWORD: ${DR_POSTGRES_PASSWORD:?DR_POSTGRES_PASSWORD is required}
+      DR_REPLICATION_USER: ${DR_REPLICATION_USER:-replicator}
+      DR_REPLICATION_PASSWORD: ${DR_REPLICATION_PASSWORD:?DR_REPLICATION_PASSWORD is required}
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U ${DR_POSTGRES_USER:-gold_agent} -d ${DR_POSTGRES_DB:-gold_agent_dr}
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    ports:
+      - "${DR_POSTGRES_PRIMARY_PORT:-55432}:5432"
+    volumes:
+      - dr_postgres_primary_data:/var/lib/postgresql/data
+      - ./postgres-primary-init:/docker-entrypoint-initdb.d:ro
+
+  postgres-replica:
+    image: postgres:16-alpine
+    container_name: gold-agent-dr-postgres-replica
+    depends_on:
+      postgres-primary:
+        condition: service_healthy
+    environment:
+      PGPASSWORD: ${DR_REPLICATION_PASSWORD:?DR_REPLICATION_PASSWORD is required}
+      DR_REPLICATION_USER: ${DR_REPLICATION_USER:-replicator}
+    command:
+      - sh
+      - -c
+      - |
+        rm -rf /var/lib/postgresql/data/*
+        until pg_isready -h postgres-primary -p 5432; do sleep 2; done
+        su-exec postgres pg_basebackup -h postgres-primary -p 5432 -D /var/lib/postgresql/data -U "$${DR_REPLICATION_USER}" -v -P -R -X stream
+        echo "hot_standby=on" >> /var/lib/postgresql/data/postgresql.auto.conf
+        chown -R postgres:postgres /var/lib/postgresql/data
+        chmod 700 /var/lib/postgresql/data
+        exec su-exec postgres postgres
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U ${DR_POSTGRES_USER:-gold_agent} -d ${DR_POSTGRES_DB:-gold_agent_dr}
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    ports:
+      - "${DR_POSTGRES_REPLICA_PORT:-55433}:5432"
+    volumes:
+      - dr_postgres_replica_data:/var/lib/postgresql/data
+
+  redis-master:
+    image: redis:7-alpine
+    container_name: gold-agent-dr-redis-master
+    command:
+      - redis-server
+      - --appendonly
+      - "yes"
+      - --requirepass
+      - ${DR_REDIS_PASSWORD:?DR_REDIS_PASSWORD is required}
+    ports:
+      - "${DR_REDIS_MASTER_PORT:-6380}:6379"
+
+  redis-replica:
+    image: redis:7-alpine
+    container_name: gold-agent-dr-redis-replica
+    depends_on:
+      - redis-master
+    command:
+      - redis-server
+      - --replicaof
+      - redis-master
+      - "6379"
+      - --masterauth
+      - ${DR_REDIS_PASSWORD:?DR_REDIS_PASSWORD is required}
+      - --requirepass
+      - ${DR_REDIS_PASSWORD:?DR_REDIS_PASSWORD is required}
+    ports:
+      - "${DR_REDIS_REPLICA_PORT:-6381}:6379"
+
+  redis-sentinel-1:
+    image: redis:7-alpine
+    container_name: gold-agent-dr-redis-sentinel-1
+    depends_on:
+      - redis-master
+      - redis-replica
+    command:
+      - sh
+      - -c
+      - |
+        cat > /tmp/sentinel.conf <<EOF
+        port 26379
+        sentinel resolve-hostnames yes
+        sentinel monitor gold-agent-dr-redis redis-master 6379 2
+        sentinel auth-pass gold-agent-dr-redis ${DR_REDIS_PASSWORD:?DR_REDIS_PASSWORD is required}
+        sentinel down-after-milliseconds gold-agent-dr-redis 5000
+        sentinel failover-timeout gold-agent-dr-redis 10000
+        sentinel parallel-syncs gold-agent-dr-redis 1
+        EOF
+        redis-sentinel /tmp/sentinel.conf
+    ports:
+      - "${DR_REDIS_SENTINEL_1_PORT:-26379}:26379"
+
+  redis-sentinel-2:
+    image: redis:7-alpine
+    container_name: gold-agent-dr-redis-sentinel-2
+    depends_on:
+      - redis-master
+      - redis-replica
+    command:
+      - sh
+      - -c
+      - |
+        cat > /tmp/sentinel.conf <<EOF
+        port 26379
+        sentinel resolve-hostnames yes
+        sentinel monitor gold-agent-dr-redis redis-master 6379 2
+        sentinel auth-pass gold-agent-dr-redis ${DR_REDIS_PASSWORD:?DR_REDIS_PASSWORD is required}
+        sentinel down-after-milliseconds gold-agent-dr-redis 5000
+        sentinel failover-timeout gold-agent-dr-redis 10000
+        sentinel parallel-syncs gold-agent-dr-redis 1
+        EOF
+        redis-sentinel /tmp/sentinel.conf
+    ports:
+      - "${DR_REDIS_SENTINEL_2_PORT:-26380}:26379"
+
+  redis-sentinel-3:
+    image: redis:7-alpine
+    container_name: gold-agent-dr-redis-sentinel-3
+    depends_on:
+      - redis-master
+      - redis-replica
+    command:
+      - sh
+      - -c
+      - |
+        cat > /tmp/sentinel.conf <<EOF
+        port 26379
+        sentinel resolve-hostnames yes
+        sentinel monitor gold-agent-dr-redis redis-master 6379 2
+        sentinel auth-pass gold-agent-dr-redis ${DR_REDIS_PASSWORD:?DR_REDIS_PASSWORD is required}
+        sentinel down-after-milliseconds gold-agent-dr-redis 5000
+        sentinel failover-timeout gold-agent-dr-redis 10000
+        sentinel parallel-syncs gold-agent-dr-redis 1
+        EOF
+        redis-sentinel /tmp/sentinel.conf
+    ports:
+      - "${DR_REDIS_SENTINEL_3_PORT:-26381}:26379"
+
+volumes:
+  dr_postgres_primary_data:
+  dr_postgres_replica_data:

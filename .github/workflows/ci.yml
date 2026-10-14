@@ -1,0 +1,189 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  api:
+    name: API regression
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: gold_agent
+          POSTGRES_USER: gold_agent
+          POSTGRES_PASSWORD: gold_agent
+        ports:
+          - "5432:5432"
+        options: >-
+          --health-cmd "pg_isready -U gold_agent -d gold_agent"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      redis:
+        image: redis:7
+        ports:
+          - "6379:6379"
+    env:
+      DATABASE_URL: postgresql+psycopg://gold_agent:gold_agent@127.0.0.1:5432/gold_agent
+      REDIS_URL: redis://127.0.0.1:6379/0
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install API dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install pytest
+          python -m pip install -e apps/api
+
+      - name: Compile API sources
+        run: python -m compileall apps/api/app apps/api/tests -q
+
+      - name: Run API tests
+        run: python -m pytest apps/api/tests/ -p no:cacheprovider
+
+  web:
+    name: Web regression
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install web dependencies
+        run: npm ci --prefix apps/web
+
+      - name: Run web tests
+        run: npm --prefix apps/web run test
+
+      - name: Build web
+        run: npm --prefix apps/web run build
+
+  startup:
+    name: Clean Compose startup
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      COMPOSE_PROJECT_NAME: xau-compass-lab-smoke
+      PHASE5_ADMIN_USERNAME: smoke_admin
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Generate disposable local configuration
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import os
+          import secrets
+
+          values = {}
+          for line in Path('.env.example').read_text().splitlines():
+              if line and not line.startswith('#') and '=' in line:
+                  name, value = line.split('=', 1)
+                  values[name] = value
+          for name in ('POSTGRES_PASSWORD', 'REDIS_PASSWORD', 'GRAFANA_ADMIN_PASSWORD', 'AUTH_TOKEN_SECRET'):
+              values[name] = secrets.token_hex(32)
+              print('::add-mask::' + values[name])
+          values['DATABASE_URL'] = 'postgresql://gold_agent:' + values['POSTGRES_PASSWORD'] + '@postgres:5432/gold_agent'
+          values['REDIS_URL'] = 'redis://:' + values['REDIS_PASSWORD'] + '@redis:6379/0'
+          assert values['LLM_ANALYSIS_ENABLED'] == 'false'
+          assert values['PHASE5_OBSERVATION_COLLECTION_ENABLED'] == 'false'
+          assert values['PHASE5_EVIDENCE_WINDOW_STARTED'] == 'false'
+          assert values['PHASE5_IBKR_PAPER_ORDER_EXECUTION_ENABLED'] == 'false'
+          Path('.env').write_text('\n'.join(name + '=' + value for name, value in values.items()) + '\n')
+          password = secrets.token_hex(24)
+          print('::add-mask::' + password)
+          with open(os.environ['GITHUB_ENV'], 'a') as env_file:
+              env_file.write('PHASE5_ADMIN_PASSWORD=' + password + '\n')
+          PY
+          docker compose config --quiet
+
+      - name: Build and migrate
+        run: |
+          docker compose build api web
+          docker compose up -d postgres redis
+          docker compose run --rm api python -m alembic upgrade head
+
+      - name: Initialize administrator without changing strategy parameters
+        run: |
+          docker compose run --rm -T -e PHASE5_ADMIN_USERNAME -e PHASE5_ADMIN_PASSWORD api python - <<'PY'
+          from sqlalchemy import select
+          from app.database import SessionLocal
+          from app.models import StrategyRun
+          from scripts.phase5_soak_setup import ensure_admin
+
+          with SessionLocal.begin() as session:
+              before = {str(strategy.id): dict(strategy.parameters or {}) for strategy in session.scalars(select(StrategyRun))}
+              ensure_admin(session)
+              after = {str(strategy.id): dict(strategy.parameters or {}) for strategy in session.scalars(select(StrategyRun))}
+              assert before == after
+          PY
+
+      - name: Start research services
+        run: docker compose up -d api worker beat web flower
+
+      - name: Verify health and administrator login
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import time
+          from urllib.error import URLError
+          from urllib.request import Request, urlopen
+
+          deadline = time.monotonic() + 120
+          while True:
+              try:
+                  with urlopen('http://localhost:8000/api/v1/health', timeout=5) as response:
+                      health = json.load(response)
+                  assert health['success'] is True
+                  assert health['data']['db_connected'] is True
+                  assert health['data']['redis_connected'] is True
+                  with urlopen('http://localhost:3000', timeout=5) as response:
+                      assert response.status == 200
+                  break
+              except (URLError, TimeoutError, AssertionError):
+                  if time.monotonic() >= deadline:
+                      raise
+                  time.sleep(1)
+          body = json.dumps({'username': os.environ['PHASE5_ADMIN_USERNAME'], 'password': os.environ['PHASE5_ADMIN_PASSWORD']}).encode()
+          request = Request('http://localhost:8000/api/v1/auth/login', data=body, headers={'Content-Type': 'application/json'}, method='POST')
+          with urlopen(request, timeout=10) as response:
+              login = json.load(response)
+          assert login['success'] is True
+          assert login['data']['access_token']
+          assert login['data']['refresh_token']
+          assert 'admin' in login['data']['user']['roles']
+          print('Fresh startup, healthy dependencies, unchanged initialization strategy, and administrator login verified.')
+          PY
+
+      - name: Show service logs on failure
+        if: failure()
+        run: docker compose logs --tail=80 api web postgres redis
+
+      - name: Remove disposable services
+        if: always()
+        run: docker compose down --volumes --remove-orphans

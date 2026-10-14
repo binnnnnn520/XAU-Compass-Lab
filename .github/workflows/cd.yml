@@ -1,0 +1,100 @@
+name: CD
+
+on:
+  push:
+    tags:
+      - "v*"
+      - "phase*-accepted-*"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  api-package:
+    name: API package
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install API packaging dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install build
+          python -m pip install -e apps/api
+
+      - name: Build API package
+        run: python -m build apps/api --outdir dist/api
+
+      - name: Upload API package artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-dist
+          path: dist/api
+
+  web-package:
+    name: Web package
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install web dependencies
+        run: npm install --prefix apps/web
+
+      - name: Build web package
+        run: npm --prefix apps/web run build
+
+      - name: Archive web build
+        run: tar -czf web-next-build.tgz -C apps/web .next next.config.mjs package.json
+
+      - name: Upload web package artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-next-build
+          path: web-next-build.tgz
+
+  docker-images:
+    name: Docker images
+    runs-on: ubuntu-latest
+    needs:
+      - api-package
+      - web-package
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+
+      - name: Build and push API image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: infra/docker/api.Dockerfile
+          push: true
+          tags: ghcr.io/${{ github.repository }}/api:${{ github.ref_name }}
+
+      - name: Build and push web image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: infra/docker/web.Dockerfile
+          push: true
+          tags: ghcr.io/${{ github.repository }}/web:${{ github.ref_name }}

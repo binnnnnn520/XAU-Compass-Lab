@@ -1,0 +1,98 @@
+[
+  {
+    "id": "provider-fed-cuts-001",
+    "title": "Gold climbs as traders add bets on Federal Reserve rate cuts",
+    "summary": "Softer inflation data pushed Treasury yields lower and increased expectations for policy easing.",
+    "content": "Lower real rates tend to reduce the opportunity cost of holding bullion.",
+    "published_at": "2026-04-02T10:00:00Z",
+    "expected_sentiment": "positive"
+  },
+  {
+    "id": "provider-hawkish-fed-002",
+    "title": "Gold falls after hawkish Fed remarks lift the dollar",
+    "summary": "Officials said inflation remains too high and markets cut near-term easing expectations.",
+    "content": "The dollar index rose and yields moved higher after the remarks.",
+    "published_at": "2026-04-02T11:00:00Z",
+    "expected_sentiment": "negative"
+  },
+  {
+    "id": "provider-hot-cpi-003",
+    "title": "Gold retreats as hotter CPI revives rate-hike concern",
+    "summary": "Consumer inflation surprised to the upside, pressuring rate-sensitive assets.",
+    "content": "Higher-for-longer policy expectations weighed on non-yielding gold.",
+    "published_at": "2026-04-02T12:00:00Z",
+    "expected_sentiment": "negative"
+  },
+  {
+    "id": "provider-cool-cpi-004",
+    "title": "Gold rallies after cooler CPI weakens dollar and yields",
+    "summary": "Inflation slowed more than economists expected, supporting demand for bullion.",
+    "content": "Investors bought gold as real-rate expectations declined.",
+    "published_at": "2026-04-02T13:00:00Z",
+    "expected_sentiment": "positive"
+  },
+  {
+    "id": "provider-geopolitical-risk-005",
+    "title": "Gold gains as Middle East conflict risk spurs safe-haven demand",
+    "summary": "Investors moved into defensive assets after reports of escalating regional tensions.",
+    "content": "Safe-haven flows supported bullion despite a steady dollar.",
+    "published_at": "2026-04-02T14:00:00Z",
+    "expected_sentiment": "positive"
+  },
+  {
+    "id": "provider-ceasefire-006",
+    "title": "Gold slips as ceasefire hopes reduce safe-haven demand",
+    "summary": "Diplomatic progress eased geopolitical risk and reduced defensive flows.",
+    "content": "Bullion gave back part of the prior session's risk-premium rally.",
+    "published_at": "2026-04-02T15:00:00Z",
+    "expected_sentiment": "negative"
+  },
+  {
+    "id": "provider-central-bank-007",
+    "title": "Gold supported by fresh central bank buying reports",
+    "summary": "Reserve managers continued to add bullion holdings according to monthly data.",
+    "content": "Persistent official-sector demand is a supportive structural signal for gold.",
+    "published_at": "2026-04-02T16:00:00Z",
+    "expected_sentiment": "positive"
+  },
+  {
+    "id": "provider-yields-dollar-008",
+    "title": "Gold pressured as Treasury yields and dollar strengthen",
+    "summary": "The metal lost ground while bond yields climbed across the curve.",
+    "content": "A stronger dollar made bullion more expensive for non-dollar buyers.",
+    "published_at": "2026-04-02T17:00:00Z",
+    "expected_sentiment": "negative"
+  },
+  {
+    "id": "provider-etf-outflows-009",
+    "title": "Gold edges lower as ETF outflows show softer investor demand",
+    "summary": "Exchange-traded funds backed by bullion reported another week of redemptions.",
+    "content": "The outflows signaled weaker investment appetite for gold.",
+    "published_at": "2026-04-02T18:00:00Z",
+    "expected_sentiment": "negative"
+  },
+  {
+    "id": "provider-etf-inflows-010",
+    "title": "Gold rises as bullion ETFs attract renewed inflows",
+    "summary": "Fund flows turned positive as investors increased exposure to precious metals.",
+    "content": "Improved ETF demand helped absorb selling pressure from a firmer dollar.",
+    "published_at": "2026-04-02T19:00:00Z",
+    "expected_sentiment": "positive"
+  },
+  {
+    "id": "provider-fomc-wait-011",
+    "title": "Gold holds steady before FOMC minutes",
+    "summary": "Bullion stayed in a narrow range as traders waited for policy guidance.",
+    "content": "The market showed limited conviction ahead of the release.",
+    "published_at": "2026-04-02T20:00:00Z",
+    "expected_sentiment": "neutral"
+  },
+  {
+    "id": "provider-mixed-drivers-012",
+    "title": "Gold little changed as safe-haven bids offset a stronger dollar",
+    "summary": "Geopolitical concerns supported demand, while currency strength capped gains.",
+    "content": "The competing drivers left bullion near unchanged levels.",
+    "published_at": "2026-04-02T21:00:00Z",
+    "expected_sentiment": "neutral"
+  }
+]

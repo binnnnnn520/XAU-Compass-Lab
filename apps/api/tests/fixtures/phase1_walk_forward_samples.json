@@ -1,0 +1,14 @@
+[
+  {"timestamp": "2026-04-03T00:00:00Z", "probability": "0.7200", "realized_return": "0.0040"},
+  {"timestamp": "2026-04-03T01:00:00Z", "probability": "0.6800", "realized_return": "0.0030"},
+  {"timestamp": "2026-04-03T02:00:00Z", "probability": "0.3100", "realized_return": "-0.0040"},
+  {"timestamp": "2026-04-03T03:00:00Z", "probability": "0.4800", "realized_return": "0.0010"},
+  {"timestamp": "2026-04-03T04:00:00Z", "probability": "0.7600", "realized_return": "0.0050"},
+  {"timestamp": "2026-04-03T05:00:00Z", "probability": "0.2900", "realized_return": "-0.0030"},
+  {"timestamp": "2026-04-03T06:00:00Z", "probability": "0.5700", "realized_return": "0.0020"},
+  {"timestamp": "2026-04-03T07:00:00Z", "probability": "0.4300", "realized_return": "-0.0010"},
+  {"timestamp": "2026-04-03T08:00:00Z", "probability": "0.6500", "realized_return": "0.0030"},
+  {"timestamp": "2026-04-03T09:00:00Z", "probability": "0.3500", "realized_return": "-0.0020"},
+  {"timestamp": "2026-04-03T10:00:00Z", "probability": "0.5300", "realized_return": "0.0010"},
+  {"timestamp": "2026-04-03T11:00:00Z", "probability": "0.2500", "realized_return": "-0.0040"}
+]

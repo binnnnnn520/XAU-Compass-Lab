@@ -1,0 +1,86 @@
+[
+  {
+    "id": "fed-rate-cut-001",
+    "title": "Gold rises as Fed rate cut expectations grow",
+    "summary": "Traders increased bets on a Federal Reserve rate cut after softer inflation data.",
+    "content": "Lower real-rate expectations supported gold prices during the New York session.",
+    "published_at": "2026-04-01T10:00:00Z",
+    "expected_sentiment": "positive",
+    "recorded_analysis": {
+      "sentiment": "positive",
+      "score": "0.7200",
+      "confidence": "0.8400",
+      "reasoning": "Dovish policy expectations reduce the opportunity cost of holding gold.",
+      "event_tags": [
+        {
+          "tag_type": "monetary_policy",
+          "tag_value": "fed_rate_cut",
+          "relevance_score": "0.9300"
+        }
+      ]
+    }
+  },
+  {
+    "id": "hawkish-fed-002",
+    "title": "Gold slips after hawkish Fed comments lift dollar",
+    "summary": "Treasury yields rose after officials pushed back on near-term easing.",
+    "content": "A stronger dollar pressured bullion as markets repriced policy risk.",
+    "published_at": "2026-04-01T11:00:00Z",
+    "expected_sentiment": "negative",
+    "recorded_analysis": {
+      "sentiment": "negative",
+      "score": "-0.6400",
+      "confidence": "0.8100",
+      "reasoning": "Higher yields and a stronger dollar usually weigh on gold.",
+      "event_tags": [
+        {
+          "tag_type": "monetary_policy",
+          "tag_value": "fed_rate_hike",
+          "relevance_score": "0.8800"
+        }
+      ]
+    }
+  },
+  {
+    "id": "war-risk-003",
+    "title": "Gold steady as conflict risk offsets strong dollar",
+    "summary": "Safe-haven flows balanced pressure from a firmer dollar.",
+    "content": "Investors monitored geopolitical tension while currency moves capped upside.",
+    "published_at": "2026-04-01T12:00:00Z",
+    "expected_sentiment": "positive",
+    "recorded_analysis": {
+      "sentiment": "positive",
+      "score": "0.4100",
+      "confidence": "0.7000",
+      "reasoning": "Geopolitical risk can support safe-haven demand for gold.",
+      "event_tags": [
+        {
+          "tag_type": "geopolitical",
+          "tag_value": "conflict_risk",
+          "relevance_score": "0.8500"
+        }
+      ]
+    }
+  },
+  {
+    "id": "rangebound-004",
+    "title": "Gold holds narrow range before jobs data",
+    "summary": "Bullion moved sideways as traders waited for nonfarm payrolls.",
+    "content": "The market showed limited conviction ahead of the next macro catalyst.",
+    "published_at": "2026-04-01T13:00:00Z",
+    "expected_sentiment": "neutral",
+    "recorded_analysis": {
+      "sentiment": "negative",
+      "score": "-0.1200",
+      "confidence": "0.5200",
+      "reasoning": "The model over-weighted pre-data caution in this recorded output.",
+      "event_tags": [
+        {
+          "tag_type": "economic_data",
+          "tag_value": "jobs_report",
+          "relevance_score": "0.7600"
+        }
+      ]
+    }
+  }
+]

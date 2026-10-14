@@ -1,0 +1,587 @@
+[
+  {
+    "content": "Lower real rates tend to reduce the opportunity cost of holding bullion.",
+    "expected_sentiment": "positive",
+    "id": "provider-fed-cuts-001",
+    "published_at": "2026-04-02T10:00:00Z",
+    "recorded_analysis": {
+      "confidence": "0.9500",
+      "event_tags": [
+        {
+          "metadata": {
+            "provider": "openai",
+            "source": "llm"
+          },
+          "relevance_score": "0.9500",
+          "tag_type": "MonetaryPolicy",
+          "tag_value": "Federal Reserve Rate Cuts"
+        },
+        {
+          "metadata": {
+            "provider": "openai",
+            "source": "llm"
+          },
+          "relevance_score": "0.8500",
+          "tag_type": "EconomicIndicator",
+          "tag_value": "Inflation Data"
+        },
+        {
+          "metadata": {
+            "provider": "openai",
+            "source": "llm"
+          },
+          "relevance_score": "0.9000",
+          "tag_type": "MarketFactor",
+          "tag_value": "Treasury Yields"
+        }
+      ],
+      "metadata": {
+        "llm_batch_size": 1,
+        "llm_cache_hit": false,
+        "llm_daily_budget_usd": "1.0000",
+        "llm_daily_spend_usd": "0.0010",
+        "model": "ZhipuAI/GLM-5",
+        "provider": "openai"
+      },
+      "reasoning": "The article explicitly states gold prices are rising ('climbs') driven by increased market expectations for Federal Reserve rate cuts. Lower Treasury yields and softer inflation data reduce the opportunity cost of holding non-yielding bullion, creating a favorable macroeconomic environment for gold appreciation.",
+      "score": "0.8000",
+      "sentiment": "positive"
+    },
+    "summary": "Softer inflation data pushed Treasury yields lower and increased expectations for policy easing.",
+    "title": "Gold climbs as traders add bets on Federal Reserve rate cuts"
+  },
+  {
+    "content": "The dollar index rose and yields moved higher after the remarks.",
+    "expected_sentiment": "negative",
+    "id": "provider-hawkish-fed-002",
+    "published_at": "2026-04-02T11:00:00Z",
+    "recorded_analysis": {
+      "confidence": "0.9000",
+      "event_tags": [
+        {
+          "metadata": {
+            "provider": "openai",
+            "source": "llm"
+          },
+          "relevance_score": "0.9500",
+          "tag_type": "MonetaryPolicy",
+          "tag_value": "Hawkish Fed"
+        },
+        {
+          "metadata": {
+            "provider": "openai",
+            "source": "llm"
+          },
+          "relevance_score": "0.9000",
+          "tag_type": "Currency",
+          "tag_value": "Dollar Strength"
+        },
+        {
+          "metadata": {
+            "provider": "openai",
+            "source": "llm"
+          },
+          "relevance_score": "0.8500",
+          "tag_type": "InterestRates",
+          "tag_value": "Yields Rising"
+        }
+      ],
+      "metadata": {
+        "llm_batch_size": 1,
+        "llm_cache_hit": false,
+        "llm_daily_budget_usd": "1.0000",
+        "llm_daily_spend_usd": "0.0019",
+        "model": "ZhipuAI/GLM-5",
+        "provider": "openai"
+      },
+      "reasoning": "The news explicitly states that gold prices fell following hawkish Federal Reserve remarks. A hawkish stance supports higher interest rates, which strengthens the dollar and increases yields. This raises the opportunity cost of holding non-yielding bullion, creating strong downward pressure on gold prices.",
+      "score": "-0.8000",
+      "sentiment": "negative"
+    },
+    "summary": "Officials said inflation remains too high and markets cut near-term easing expectations.",
+    "title": "Gold falls after hawkish Fed remarks lift the dollar"
+  },
+  {
+    "content": "Higher-for-longer policy expectations weighed on non-yielding gold.",
+    "expected_sentiment": "negative",
+    "id": "provider-hot-cpi-003",
+    "published_at": "2026-04-02T12:00:00Z",
+    "recorded_analysis": {
+      "confidence": "0.9500",
+      "event_tags": [
+        {
+          "metadata": {
+            "provider": "openai",
+            "source": "llm"
+          },
+          "relevance_score": "1.0000",
+          "tag_type": "MacroEconomic",
+          "tag_value": "CPI"
+        },
+        {
+          "metadata": {
+            "provider": "openai",
+            "source": "llm"
+          },
+          "relevance_score": "0.9500",
+          "tag_type": "MonetaryPolicy",
+          "tag_value": "RateHikeExpectations"
+        },
+        {
+          "metadata": {
+            "provider": "openai",
+            "source": "llm"
+          },
+          "relevance_score": "0.9000",
+          "tag_type": "PriceAction",
+          "tag_value": "Retreat"
+        }
+      ],
+      "metadata": {
+        "llm_batch_size": 1,
+        "llm_cache_hit": false,
+        "llm_daily_budget_usd": "1.0000",
+        "llm_daily_spend_usd": "0.0037",
+        "model": "ZhipuAI/GLM-5",
+        "provider": "openai"
+      },
+      "reasoning": "The hotter-than-expected CPI data signals persistent inflation, which forces the Federal Reserve to maintain higher interest rates for longer. This increases the opportunity cost of holding non-yielding gold, leading to a direct sell-off in the market.",
+      "score": "-0.8000",
+      "sentiment": "negative"
+    },
+    "summary": "Consumer inflation surprised to the upside, pressuring rate-sensitive assets.",
+    "title": "Gold retreats as hotter CPI revives rate-hike concern"
+  },
+  {
+    "content": "Investors bought gold as real-rate expectations declined.",
+    "expected_sentiment": "positive",
+    "id": "provider-cool-cpi-004",
+    "published_at": "2026-04-02T13:00:00Z",
+    "recorded_analysis": {
+      "confidence": "0.9500",
+      "event_tags": [
+        {
+          "metadata": {
+            "provider": "openai",
+            "source": "llm"
+          },
+          "relevance_score": "1.0000",
+          "tag_type": "macro_event",
+          "tag_value": "CPI Release"
+        },
+        {
+          "metadata": {
+            "provider": "openai",
+            "source": "llm"
+          },
+          "relevance_score": "0.9000",
+          "tag_type": "market_driver",
+          "tag_value": "US Dollar Weakness"
+        },
+        {
+          "metadata": {
+            "provider": "openai",
+            "source": "llm"
+          },
+          "relevance_score": "0.9000",
+          "tag_type": "market_driver",
+          "tag_value": "Bond Yields Decline"
+        }
+      ],
+      "metadata": {
+        "llm_batch_size": 1,
+        "llm_cache_hit": false,
+        "llm_daily_budget_usd": "1.0000",
+        "llm_daily_spend_usd": "0.0046",
+        "model": "ZhipuAI/GLM-5",
+        "provider": "openai"
+      },
+      "reasoning": "Cooler-than-expected CPI data reduced pressure on the US dollar and bond yields. Since gold is priced in dollars and competes with yield-bearing assets, a weaker dollar and lower real rates increase gold's attractiveness. The explicit mention of a 'rally' confirms the immediate price impact.",
+      "score": "0.8000",
+      "sentiment": "positive"
+    },
+    "summary": "Inflation slowed more than economists expected, supporting demand for bullion.",
+    "title": "Gold rallies after cooler CPI weakens dollar and yields"
+  },
+  {
+    "content": "Safe-haven flows supported bullion despite a steady dollar.",
+    "expected_sentiment": "positive",
+    "id": "provider-geopolitical-risk-005",
+    "published_at": "2026-04-02T14:00:00Z",
+    "recorded_analysis": {
+      "confidence": "0.8500",
+      "event_tags": [
+        {
+          "metadata": {
+            "provider": "openai",
+            "source": "llm"
+          },
+          "relevance_score": "1.0000",
+          "tag_type": "Geopolitical",
+          "tag_value": "Middle East Conflict"
+        },
+        {
+          "metadata": {
+            "provider": "openai",
+            "source": "llm"
+          },
+          "relevance_score": "0.9500",
+          "tag_type": "Demand Driver",
+          "tag_value": "Safe-Haven Demand"
+        },
+        {
+          "metadata": {
+            "provider": "openai",
+            "source": "llm"
+          },
+          "relevance_score": "0.4000",
+          "tag_type": "Market Factor",
+          "tag_value": "US Dollar"
+        }
+      ],
+      "metadata": {
+        "llm_batch_size": 1,
+        "llm_cache_hit": false,
+        "llm_daily_budget_usd": "1.0000",
+        "llm_daily_spend_usd": "0.0055",
+        "model": "ZhipuAI/GLM-5",
+        "provider": "openai"
+      },
+      "reasoning": "The article explicitly states that gold prices are gaining due to escalating Middle East tensions driving safe-haven demand. This geopolitical risk factor is a strong bullish indicator for gold, particularly since the price increase occurred despite a steady dollar, suggesting robust underlying buying pressure.",
+      "score": "0.7000",
+      "sentiment": "positive"
+    },
+    "summary": "Investors moved into defensive assets after reports of escalating regional tensions.",
+    "title": "Gold gains as Middle East conflict risk spurs safe-haven demand"
+  },
+  {
+    "content": "Bullion gave back part of the prior session's risk-premium rally.",
+    "expected_sentiment": "negative",
+    "id": "provider-ceasefire-006",
+    "published_at": "2026-04-02T15:00:00Z",
+    "recorded_analysis": {
+      "confidence": "0.8500",
+      "event_tags": [
+        {
+          "metadata": {
+            "provider": "openai",
+            "source": "llm"
+          },
+          "relevance_score": "0.9500",
+          "tag_type": "Geopolitics",
+          "tag_value": "Ceasefire"
+        },
+        {
+          "metadata": {
+            "provider": "openai",
+            "source": "llm"
+          },
+          "relevance_score": "0.9000",
+          "tag_type": "Market_Flow",
+          "tag_value": "Safe_Haven_Unwinding"
+        }
+      ],
+      "metadata": {
+        "llm_batch_size": 1,
+        "llm_cache_hit": false,
+        "llm_daily_budget_usd": "1.0000",
+        "llm_daily_spend_usd": "0.0064",
+        "model": "ZhipuAI/GLM-5",
+        "provider": "openai"
+      },
+      "reasoning": "Gold prices are declining as reduced geopolitical tensions from ceasefire prospects diminish the appeal of safe-haven assets, prompting investors to unwind prior risk premiums.",
+      "score": "-0.5500",
+      "sentiment": "negative"
+    },
+    "summary": "Diplomatic progress eased geopolitical risk and reduced defensive flows.",
+    "title": "Gold slips as ceasefire hopes reduce safe-haven demand"
+  },
+  {
+    "content": "Persistent official-sector demand is a supportive structural signal for gold.",
+    "expected_sentiment": "positive",
+    "id": "provider-central-bank-007",
+    "published_at": "2026-04-02T16:00:00Z",
+    "recorded_analysis": {
+      "confidence": "0.8500",
+      "event_tags": [
+        {
+          "metadata": {
+            "provider": "openai",
+            "source": "llm"
+          },
+          "relevance_score": "1.0000",
+          "tag_type": "central_bank_activity",
+          "tag_value": "buying"
+        },
+        {
+          "metadata": {
+            "provider": "openai",
+            "source": "llm"
+          },
+          "relevance_score": "0.9500",
+          "tag_type": "demand_driver",
+          "tag_value": "official_sector"
+        }
+      ],
+      "metadata": {
+        "llm_batch_size": 1,
+        "llm_cache_hit": false,
+        "llm_daily_budget_usd": "1.0000",
+        "llm_daily_spend_usd": "0.0073",
+        "model": "ZhipuAI/GLM-5",
+        "provider": "openai"
+      },
+      "reasoning": "Central bank buying represents significant, persistent demand from the official sector, creating a structural support level for gold prices. The report confirms continued accumulation by reserve managers, which reduces available supply and signals confidence in the metal.",
+      "score": "0.6500",
+      "sentiment": "positive"
+    },
+    "summary": "Reserve managers continued to add bullion holdings according to monthly data.",
+    "title": "Gold supported by fresh central bank buying reports"
+  },
+  {
+    "content": "A stronger dollar made bullion more expensive for non-dollar buyers.",
+    "expected_sentiment": "negative",
+    "id": "provider-yields-dollar-008",
+    "published_at": "2026-04-02T17:00:00Z",
+    "recorded_analysis": {
+      "confidence": "0.8500",
+      "event_tags": [
+        {
+          "metadata": {
+            "provider": "openai",
+            "source": "llm"
+          },
+          "relevance_score": "0.9000",
+          "tag_type": "Macro/FX",
+          "tag_value": "USD Strength"
+        },
+        {
+          "metadata": {
+            "provider": "openai",
+            "source": "llm"
+          },
+          "relevance_score": "0.9000",
+          "tag_type": "Macro/Rates",
+          "tag_value": "Treasury Yields Rising"
+        },
+        {
+          "metadata": {
+            "provider": "openai",
+            "source": "llm"
+          },
+          "relevance_score": "0.8000",
+          "tag_type": "Price Action",
+          "tag_value": "Price Decline"
+        }
+      ],
+      "metadata": {
+        "llm_batch_size": 1,
+        "llm_cache_hit": false,
+        "llm_daily_budget_usd": "1.0000",
+        "llm_daily_spend_usd": "0.0027",
+        "model": "ZhipuAI/GLM-5",
+        "provider": "openai"
+      },
+      "reasoning": "Gold prices are declining due to rising Treasury yields, which increase the opportunity cost of holding non-yielding bullion, and a stronger US dollar, which makes gold more expensive for foreign buyers.",
+      "score": "-0.7000",
+      "sentiment": "negative"
+    },
+    "summary": "The metal lost ground while bond yields climbed across the curve.",
+    "title": "Gold pressured as Treasury yields and dollar strengthen"
+  },
+  {
+    "content": "The outflows signaled weaker investment appetite for gold.",
+    "expected_sentiment": "negative",
+    "id": "provider-etf-outflows-009",
+    "published_at": "2026-04-02T18:00:00Z",
+    "recorded_analysis": {
+      "confidence": "0.8500",
+      "event_tags": [
+        {
+          "metadata": {
+            "provider": "openai",
+            "source": "llm"
+          },
+          "relevance_score": "1.0000",
+          "tag_type": "Market_Flow",
+          "tag_value": "ETF_Outflows"
+        },
+        {
+          "metadata": {
+            "provider": "openai",
+            "source": "llm"
+          },
+          "relevance_score": "0.9000",
+          "tag_type": "Demand_Indicator",
+          "tag_value": "Weak_Investment_Demand"
+        }
+      ],
+      "metadata": {
+        "llm_batch_size": 1,
+        "llm_cache_hit": false,
+        "llm_daily_budget_usd": "1.0000",
+        "llm_daily_spend_usd": "0.0109",
+        "model": "ZhipuAI/GLM-5",
+        "provider": "openai"
+      },
+      "reasoning": "The article explicitly links ETF redemptions to weaker investment appetite, creating direct selling pressure on gold. Sustained outflows are a bearish signal for price action.",
+      "score": "-0.5000",
+      "sentiment": "negative"
+    },
+    "summary": "Exchange-traded funds backed by bullion reported another week of redemptions.",
+    "title": "Gold edges lower as ETF outflows show softer investor demand"
+  },
+  {
+    "content": "Improved ETF demand helped absorb selling pressure from a firmer dollar.",
+    "expected_sentiment": "positive",
+    "id": "provider-etf-inflows-010",
+    "published_at": "2026-04-02T19:00:00Z",
+    "recorded_analysis": {
+      "confidence": "0.8500",
+      "event_tags": [
+        {
+          "metadata": {
+            "provider": "openai",
+            "source": "llm"
+          },
+          "relevance_score": "0.9500",
+          "tag_type": "Demand Factor",
+          "tag_value": "ETF Inflows"
+        },
+        {
+          "metadata": {
+            "provider": "openai",
+            "source": "llm"
+          },
+          "relevance_score": "0.8000",
+          "tag_type": "Market Headwind",
+          "tag_value": "Strong Dollar"
+        },
+        {
+          "metadata": {
+            "provider": "openai",
+            "source": "llm"
+          },
+          "relevance_score": "0.9000",
+          "tag_type": "Price Action",
+          "tag_value": "Price Rise"
+        }
+      ],
+      "metadata": {
+        "llm_batch_size": 1,
+        "llm_cache_hit": false,
+        "llm_daily_budget_usd": "1.0000",
+        "llm_daily_spend_usd": "0.0136",
+        "model": "ZhipuAI/GLM-5",
+        "provider": "openai"
+      },
+      "reasoning": "Gold prices are increasing driven by renewed capital inflows into bullion ETFs. The bullish signal is reinforced by the fact that this demand was strong enough to offset selling pressure typically associated with a stronger US dollar, indicating robust underlying investment interest.",
+      "score": "0.6500",
+      "sentiment": "positive"
+    },
+    "summary": "Fund flows turned positive as investors increased exposure to precious metals.",
+    "title": "Gold rises as bullion ETFs attract renewed inflows"
+  },
+  {
+    "content": "The market showed limited conviction ahead of the release.",
+    "expected_sentiment": "neutral",
+    "id": "provider-fomc-wait-011",
+    "published_at": "2026-04-02T20:00:00Z",
+    "recorded_analysis": {
+      "confidence": "0.6000",
+      "event_tags": [
+        {
+          "metadata": {
+            "provider": "openai",
+            "source": "llm"
+          },
+          "relevance_score": "0.9500",
+          "tag_type": "monetary_policy",
+          "tag_value": "FOMC_minutes"
+        },
+        {
+          "metadata": {
+            "provider": "openai",
+            "source": "llm"
+          },
+          "relevance_score": "0.8000",
+          "tag_type": "market_behavior",
+          "tag_value": "consolidation"
+        },
+        {
+          "metadata": {
+            "provider": "openai",
+            "source": "llm"
+          },
+          "relevance_score": "0.7000",
+          "tag_type": "volatility",
+          "tag_value": "low"
+        }
+      ],
+      "metadata": {
+        "llm_batch_size": 1,
+        "llm_cache_hit": false,
+        "llm_daily_budget_usd": "1.0000",
+        "llm_daily_spend_usd": "0.0036",
+        "model": "ZhipuAI/GLM-5",
+        "provider": "openai"
+      },
+      "reasoning": "Gold is trading in a narrow range with limited conviction as markets await FOMC minutes. This represents typical pre-event consolidation with no directional bias.",
+      "score": "0.0000",
+      "sentiment": "neutral"
+    },
+    "summary": "Bullion stayed in a narrow range as traders waited for policy guidance.",
+    "title": "Gold holds steady before FOMC minutes"
+  },
+  {
+    "content": "The competing drivers left bullion near unchanged levels.",
+    "expected_sentiment": "neutral",
+    "id": "provider-mixed-drivers-012",
+    "published_at": "2026-04-02T21:00:00Z",
+    "recorded_analysis": {
+      "confidence": "0.9200",
+      "event_tags": [
+        {
+          "metadata": {
+            "provider": "openai",
+            "source": "llm"
+          },
+          "relevance_score": "0.9500",
+          "tag_type": "driver",
+          "tag_value": "safe-haven demand"
+        },
+        {
+          "metadata": {
+            "provider": "openai",
+            "source": "llm"
+          },
+          "relevance_score": "0.9000",
+          "tag_type": "macro",
+          "tag_value": "stronger dollar"
+        },
+        {
+          "metadata": {
+            "provider": "openai",
+            "source": "llm"
+          },
+          "relevance_score": "0.8500",
+          "tag_type": "theme",
+          "tag_value": "geopolitical tensions"
+        }
+      ],
+      "metadata": {
+        "llm_batch_size": 1,
+        "llm_cache_hit": false,
+        "llm_daily_budget_usd": "1.0000",
+        "llm_daily_spend_usd": "0.0181",
+        "model": "ZhipuAI/GLM-5",
+        "provider": "openai"
+      },
+      "reasoning": "The article explicitly states that gold is 'little changed' and 'near unchanged levels' because bullish safe-haven demand caused by geopolitical concerns is perfectly offsetting bearish pressure from a stronger US dollar.",
+      "score": "0.0000",
+      "sentiment": "neutral"
+    },
+    "summary": "Geopolitical concerns supported demand, while currency strength capped gains.",
+    "title": "Gold little changed as safe-haven bids offset a stronger dollar"
+  }
+]

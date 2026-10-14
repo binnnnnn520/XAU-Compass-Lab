@@ -1,0 +1,240 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: infra/docker/web.Dockerfile
+    container_name: gold-agent-web
+    depends_on:
+      api:
+        condition: service_started
+    environment:
+      API_ORIGIN: http://api:8000
+      NEXT_PUBLIC_API_BASE_PATH: /backend/api/v1
+    ports:
+      - "${WEB_PORT:-3000}:3000"
+
+  api:
+    build:
+      context: .
+      dockerfile: infra/docker/api.Dockerfile
+    container_name: gold-agent-api
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      APP_VERSION: ${APP_VERSION:-0.1.0}
+      AUTH_TOKEN_SECRET: ${AUTH_TOKEN_SECRET:?AUTH_TOKEN_SECRET is required}
+      DATABASE_URL: ${DATABASE_URL:?DATABASE_URL is required}
+      DATABASE_HOST: postgres
+      DATABASE_PORT: "5432"
+      REDIS_URL: ${REDIS_URL:-redis://:${REDIS_PASSWORD:?REDIS_PASSWORD is required}@redis:6379/0}
+      REDIS_HOST: redis
+      REDIS_PORT: "6379"
+      NEWS_FETCH_TIMEOUT_SECONDS: ${NEWS_FETCH_TIMEOUT_SECONDS:-10}
+      MARKET_DATA_SOURCES_JSON: ${MARKET_DATA_SOURCES_JSON:-[{"name":"yahoo_finance","symbol_map":{"XAUUSD":"GC=F"}}]}
+      DEFAULT_NEWS_SOURCES_JSON: ${DEFAULT_NEWS_SOURCES_JSON:-[{"name":"FXStreet RSS","url":"https://www.fxstreet.com/rss/news","source_type":"rss","fetch_interval":300},{"name":"Mining.com Gold RSS","url":"https://www.mining.com/commodity/gold/feed/","source_type":"rss","fetch_interval":600},{"name":"Investing Stock News RSS","url":"https://www.investing.com/rss/news_25.rss","source_type":"rss","fetch_interval":600}]}
+      LLM_ANALYSIS_ENABLED: ${LLM_ANALYSIS_ENABLED:-false}
+      LLM_PROVIDER: ${LLM_PROVIDER:-openai}
+      LLM_API_KEY: ${LLM_API_KEY:-}
+      LLM_MODEL: ${LLM_MODEL:-ZhipuAI/GLM-5}
+      LLM_TIMEOUT_SECONDS: ${LLM_TIMEOUT_SECONDS:-20}
+      LLM_ENDPOINT_URL: ${LLM_ENDPOINT_URL:-https://api-inference.modelscope.cn/v1/chat/completions}
+      LLM_CACHE_ENABLED: ${LLM_CACHE_ENABLED:-true}
+      LLM_BATCH_ENABLED: ${LLM_BATCH_ENABLED:-true}
+      LLM_BATCH_MAX_ITEMS: ${LLM_BATCH_MAX_ITEMS:-5}
+      LLM_DAILY_BUDGET_USD: ${LLM_DAILY_BUDGET_USD:-1.0000}
+      PHASE5_OBSERVATION_COLLECTION_ENABLED: ${PHASE5_OBSERVATION_COLLECTION_ENABLED:-false}
+      PHASE5_EVIDENCE_WINDOW_STARTED: ${PHASE5_EVIDENCE_WINDOW_STARTED:-false}
+      PHASE5_IBKR_PAPER_ORDER_EXECUTION_ENABLED: ${PHASE5_IBKR_PAPER_ORDER_EXECUTION_ENABLED:-false}
+      IBKR_PAPER_SANDBOX_MODE: ${IBKR_PAPER_SANDBOX_MODE:-paper}
+      IBKR_PAPER_SANDBOX_HOST: ${IBKR_PAPER_SANDBOX_HOST:-}
+      IBKR_PAPER_SANDBOX_PORT: ${IBKR_PAPER_SANDBOX_PORT:-}
+      IBKR_PAPER_SANDBOX_CLIENT_ID: ${IBKR_PAPER_SANDBOX_CLIENT_ID:-}
+      IBKR_PAPER_SANDBOX_ACCOUNT_ID: ${IBKR_PAPER_SANDBOX_ACCOUNT_ID:-}
+    ports:
+      - "${API_PORT:-8000}:8000"
+
+  worker:
+    build:
+      context: .
+      dockerfile: infra/docker/api.Dockerfile
+    container_name: gold-agent-worker
+    command: ["celery", "-A", "app.celery_app:celery_app", "worker", "--loglevel=INFO"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      APP_VERSION: ${APP_VERSION:-0.1.0}
+      AUTH_TOKEN_SECRET: ${AUTH_TOKEN_SECRET:?AUTH_TOKEN_SECRET is required}
+      DATABASE_URL: ${DATABASE_URL:?DATABASE_URL is required}
+      DATABASE_HOST: postgres
+      DATABASE_PORT: "5432"
+      REDIS_URL: ${REDIS_URL:-redis://:${REDIS_PASSWORD:?REDIS_PASSWORD is required}@redis:6379/0}
+      REDIS_HOST: redis
+      REDIS_PORT: "6379"
+      NEWS_FETCH_TIMEOUT_SECONDS: ${NEWS_FETCH_TIMEOUT_SECONDS:-10}
+      MARKET_DATA_SOURCES_JSON: ${MARKET_DATA_SOURCES_JSON:-[{"name":"yahoo_finance","symbol_map":{"XAUUSD":"GC=F"}}]}
+      DEFAULT_NEWS_SOURCES_JSON: ${DEFAULT_NEWS_SOURCES_JSON:-[{"name":"FXStreet RSS","url":"https://www.fxstreet.com/rss/news","source_type":"rss","fetch_interval":300},{"name":"Mining.com Gold RSS","url":"https://www.mining.com/commodity/gold/feed/","source_type":"rss","fetch_interval":600},{"name":"Investing Stock News RSS","url":"https://www.investing.com/rss/news_25.rss","source_type":"rss","fetch_interval":600}]}
+      LLM_ANALYSIS_ENABLED: ${LLM_ANALYSIS_ENABLED:-false}
+      LLM_PROVIDER: ${LLM_PROVIDER:-openai}
+      LLM_API_KEY: ${LLM_API_KEY:-}
+      LLM_MODEL: ${LLM_MODEL:-ZhipuAI/GLM-5}
+      LLM_TIMEOUT_SECONDS: ${LLM_TIMEOUT_SECONDS:-20}
+      LLM_ENDPOINT_URL: ${LLM_ENDPOINT_URL:-https://api-inference.modelscope.cn/v1/chat/completions}
+      LLM_CACHE_ENABLED: ${LLM_CACHE_ENABLED:-true}
+      LLM_BATCH_ENABLED: ${LLM_BATCH_ENABLED:-true}
+      LLM_BATCH_MAX_ITEMS: ${LLM_BATCH_MAX_ITEMS:-5}
+      LLM_DAILY_BUDGET_USD: ${LLM_DAILY_BUDGET_USD:-1.0000}
+      PHASE5_OBSERVATION_COLLECTION_ENABLED: ${PHASE5_OBSERVATION_COLLECTION_ENABLED:-false}
+      PHASE5_EVIDENCE_WINDOW_STARTED: ${PHASE5_EVIDENCE_WINDOW_STARTED:-false}
+      PHASE5_IBKR_PAPER_ORDER_EXECUTION_ENABLED: ${PHASE5_IBKR_PAPER_ORDER_EXECUTION_ENABLED:-false}
+      IBKR_PAPER_SANDBOX_MODE: ${IBKR_PAPER_SANDBOX_MODE:-paper}
+      IBKR_PAPER_SANDBOX_HOST: ${IBKR_PAPER_SANDBOX_HOST:-}
+      IBKR_PAPER_SANDBOX_PORT: ${IBKR_PAPER_SANDBOX_PORT:-}
+      IBKR_PAPER_SANDBOX_CLIENT_ID: ${IBKR_PAPER_SANDBOX_CLIENT_ID:-}
+      IBKR_PAPER_SANDBOX_ACCOUNT_ID: ${IBKR_PAPER_SANDBOX_ACCOUNT_ID:-}
+
+  beat:
+    build:
+      context: .
+      dockerfile: infra/docker/api.Dockerfile
+    container_name: gold-agent-beat
+    command: ["celery", "-A", "app.celery_app:celery_app", "beat", "--loglevel=INFO"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      APP_VERSION: ${APP_VERSION:-0.1.0}
+      AUTH_TOKEN_SECRET: ${AUTH_TOKEN_SECRET:?AUTH_TOKEN_SECRET is required}
+      DATABASE_URL: ${DATABASE_URL:?DATABASE_URL is required}
+      DATABASE_HOST: postgres
+      DATABASE_PORT: "5432"
+      REDIS_URL: ${REDIS_URL:-redis://:${REDIS_PASSWORD:?REDIS_PASSWORD is required}@redis:6379/0}
+      REDIS_HOST: redis
+      REDIS_PORT: "6379"
+      NEWS_FETCH_TIMEOUT_SECONDS: ${NEWS_FETCH_TIMEOUT_SECONDS:-10}
+      MARKET_DATA_SOURCES_JSON: ${MARKET_DATA_SOURCES_JSON:-[{"name":"yahoo_finance","symbol_map":{"XAUUSD":"GC=F"}}]}
+      DEFAULT_NEWS_SOURCES_JSON: ${DEFAULT_NEWS_SOURCES_JSON:-[{"name":"FXStreet RSS","url":"https://www.fxstreet.com/rss/news","source_type":"rss","fetch_interval":300},{"name":"Mining.com Gold RSS","url":"https://www.mining.com/commodity/gold/feed/","source_type":"rss","fetch_interval":600},{"name":"Investing Stock News RSS","url":"https://www.investing.com/rss/news_25.rss","source_type":"rss","fetch_interval":600}]}
+      LLM_ANALYSIS_ENABLED: ${LLM_ANALYSIS_ENABLED:-false}
+      LLM_PROVIDER: ${LLM_PROVIDER:-openai}
+      LLM_API_KEY: ${LLM_API_KEY:-}
+      LLM_MODEL: ${LLM_MODEL:-ZhipuAI/GLM-5}
+      LLM_TIMEOUT_SECONDS: ${LLM_TIMEOUT_SECONDS:-20}
+      LLM_ENDPOINT_URL: ${LLM_ENDPOINT_URL:-https://api-inference.modelscope.cn/v1/chat/completions}
+      LLM_CACHE_ENABLED: ${LLM_CACHE_ENABLED:-true}
+      LLM_BATCH_ENABLED: ${LLM_BATCH_ENABLED:-true}
+      LLM_BATCH_MAX_ITEMS: ${LLM_BATCH_MAX_ITEMS:-5}
+      LLM_DAILY_BUDGET_USD: ${LLM_DAILY_BUDGET_USD:-1.0000}
+      PHASE5_OBSERVATION_COLLECTION_ENABLED: ${PHASE5_OBSERVATION_COLLECTION_ENABLED:-false}
+      PHASE5_EVIDENCE_WINDOW_STARTED: ${PHASE5_EVIDENCE_WINDOW_STARTED:-false}
+      PHASE5_IBKR_PAPER_ORDER_EXECUTION_ENABLED: ${PHASE5_IBKR_PAPER_ORDER_EXECUTION_ENABLED:-false}
+      IBKR_PAPER_SANDBOX_MODE: ${IBKR_PAPER_SANDBOX_MODE:-paper}
+      IBKR_PAPER_SANDBOX_HOST: ${IBKR_PAPER_SANDBOX_HOST:-}
+      IBKR_PAPER_SANDBOX_PORT: ${IBKR_PAPER_SANDBOX_PORT:-}
+      IBKR_PAPER_SANDBOX_CLIENT_ID: ${IBKR_PAPER_SANDBOX_CLIENT_ID:-}
+      IBKR_PAPER_SANDBOX_ACCOUNT_ID: ${IBKR_PAPER_SANDBOX_ACCOUNT_ID:-}
+
+  flower:
+    image: mher/flower:2.0.1
+    container_name: gold-agent-flower
+    depends_on:
+      redis:
+        condition: service_healthy
+    environment:
+      REDIS_URL: ${REDIS_URL:-redis://:${REDIS_PASSWORD:?REDIS_PASSWORD is required}@redis:6379/0}
+    command: ["celery", "flower", "--broker=${REDIS_URL:-redis://:${REDIS_PASSWORD:?REDIS_PASSWORD is required}@redis:6379/0}", "--port=5555"]
+    ports:
+      - "${FLOWER_PORT:-5555}:5555"
+
+  prometheus:
+    image: prom/prometheus:v2.55.1
+    container_name: gold-agent-prometheus
+    depends_on:
+      api:
+        condition: service_started
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+    ports:
+      - "${PROMETHEUS_PORT:-9090}:9090"
+    volumes:
+      - ./infra/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+
+  grafana:
+    image: grafana/grafana:11.3.1
+    container_name: gold-agent-grafana
+    depends_on:
+      prometheus:
+        condition: service_started
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_ADMIN_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:?GRAFANA_ADMIN_PASSWORD is required}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+    ports:
+      - "${GRAFANA_PORT:-3001}:3000"
+    volumes:
+      - ./infra/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./infra/grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - grafana_data:/var/lib/grafana
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: gold-agent-postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-gold_agent}
+      POSTGRES_USER: ${POSTGRES_USER:-gold_agent}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U ${POSTGRES_USER:-gold_agent} -d ${POSTGRES_DB:-gold_agent}
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    container_name: gold-agent-redis
+    command:
+      - redis-server
+      - --save
+      - ""
+      - --appendonly
+      - "no"
+      - --requirepass
+      - ${REDIS_PASSWORD:?REDIS_PASSWORD is required}
+    healthcheck:
+      test:
+        - CMD
+        - redis-cli
+        - --no-auth-warning
+        - -a
+        - ${REDIS_PASSWORD:?REDIS_PASSWORD is required}
+        - ping
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+
+volumes:
+  grafana_data:
+  postgres_data:
+  prometheus_data:
