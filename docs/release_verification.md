@@ -11,16 +11,22 @@
 
 ## Verification results
 
-| Check | Result |
+| Check | Result / live evidence |
 | --- | --- |
-| Chinese and English README consistency | Pending |
-| Markdown links and retained runbook dependencies | Pending |
-| Environment defaults and auth-secret forwarding | Pending |
-| Gitleaks scan, with redacted reporting | Pending |
-| Local relevant tests | Pending |
-| Complete API regression in CI | Pending |
-| Web tests and production build | Pending |
-| Clean Compose startup and first administrator login | Pending |
-| Fresh Git history and author identity | Pending |
+| Chinese and English README consistency | Both versions and reciprocal language links checked |
+| Markdown links and retained runbook dependencies | No missing local link targets; retained runbook tests passed |
+| Environment defaults and auth-secret forwarding | Included in 20 passing local configuration/runbook tests |
+| Gitleaks scan, with redacted reporting | Gitleaks 8.30.1: zero findings in exported files and initial Git history |
+| Local relevant tests | `20 passed`; API source/tests compile successfully |
+| Complete API regression in CI | Initial run: `316 passed, 24 warnings`; current result: API regression job |
+| Web tests and production build | Current result: Web regression job in the linked CI workflow |
+| Clean Compose startup and first administrator login | Current result: Clean Compose startup job in the linked CI workflow |
+| Fresh Git history and author identity | Initial history contains only `bin` with the user's GitHub noreply address; contributor resolves to `binnnnnn520` |
+
+Current CI evidence: [CI workflow runs](https://github.com/binnnnnn520/XAU-Compass-Lab/actions/workflows/ci.yml). Publication requires all three jobs to succeed for the current release commit; this table does not turn an unexecuted or failing CI job into a pass.
+
+The [initial run](https://github.com/binnnnnn520/XAU-Compass-Lab/actions/runs/38567874292) exposed a missing npm lockfile and an uncaught transient connection reset in the new startup check. API regression passed. Release preparation adds the lockfile and corrects the bounded readiness retry; subsequent CI is the verification for those fixes.
+
+Migration comparison checked 101 backend Python modules by AST and 40 predecessor-tracked Web files after line-ending normalization: no application behavior changes. Text checkout uses LF for Linux compatibility; predecessor source files with harmless extra blank lines are preserved.
 
 Publication requires these checks to pass. CI uses isolated disposable databases and services; it does not start the formal evidence window or submit broker orders.
