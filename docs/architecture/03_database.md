@@ -1,6 +1,6 @@
 # Database / 数据库
 
-PostgreSQL schema changes are defined by the existing Alembic migrations under `apps/api/alembic/versions/`; ORM definitions are under `app/models/` and `app/auth/models.py`. This release does not introduce a schema migration.
+PostgreSQL schema changes are defined by the existing Alembic migrations under `apps/api/alembic/versions/`; ORM definitions are under `app/models/` and `app/auth/models.py`. Apply the migration chain before starting the application.
 
 | Tables | Purpose |
 | --- | --- |
@@ -13,7 +13,7 @@ PostgreSQL schema changes are defined by the existing Alembic migrations under `
 | `backtest_runs` | Experiment configuration, state, metrics, and result data |
 | `paper_orders`, `paper_positions` | Simulated execution and positions |
 | `risk_events`, `audit_logs` | Risk decisions and append-only audit evidence |
-| `live_parallel_observations` | Optional production-comparison evidence; collection disabled by default |
+| `live_parallel_observations` | Optional paper/broker comparison observations; collection disabled by default |
 | `users`, `roles` | Password hashes, local accounts, and role membership |
 
 ## Invariants

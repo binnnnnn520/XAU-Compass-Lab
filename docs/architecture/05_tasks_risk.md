@@ -14,7 +14,7 @@ Celery workers execute background ingestion, analysis, signal/paper workflows, a
 
 ## Default execution scope
 
-Paper trading uses virtual funds. Broker submission and evidence collection stay disabled in `.env.example`:
+Paper trading uses virtual funds. Broker submission and optional observation collection stay disabled in `.env.example`:
 
 ```dotenv
 PHASE5_OBSERVATION_COLLECTION_ENABLED=false
@@ -22,10 +22,10 @@ PHASE5_EVIDENCE_WINDOW_STARTED=false
 PHASE5_IBKR_PAPER_ORDER_EXECUTION_ENABLED=false
 ```
 
-The retained production runbooks explain opt-in safety procedures. Their presence is not authorization to run them. The operator has paused real-money rollout and the 14-day acceptance window.
+[Broker sandbox safety](../operations/broker_safety.md) and [observation collection](../operations/paper_observation.md) describe optional tools. Use them only with a separately configured paper account and explicit operator supervision; default startup does not require them.
 
 ## Verification
 
-Existing tests cover time filtering, finance precision, features, signals, backtesting, paper execution, authentication, risk, and optional readiness tooling. CI uses disposable service instances. Running the tests or a smoke check must not connect to a real broker or start a formal acceptance window.
+Existing tests cover time filtering, finance precision, features, signals, backtesting, paper execution, authentication, risk, and optional readiness tooling. CI uses disposable service instances. Running the tests or a smoke check must not connect to external broker accounts, submit orders, or enable scheduled observation collection.
 
 Successful engineering checks establish implementation behavior. Profitability and predictive value require a separate research protocol and evidence.

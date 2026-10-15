@@ -37,8 +37,10 @@ def test_phase5_dr_runbook_records_rto_rpo_and_isolated_stack() -> None:
     content = (REPO_ROOT / "infra/dr/README.md").read_text(encoding="utf-8")
     lower_content = content.lower()
 
-    assert "rto < 1 hour" in lower_content
-    assert "rpo < 1 hour" in lower_content
+    assert "rto" in lower_content
+    assert "rpo" in lower_content
+    assert "not measured results" in lower_content
+    assert "not an availability guarantee" in lower_content
     assert "streaming replication" in lower_content
     assert "redis sentinel" in lower_content
     assert "isolated dr stack" in lower_content

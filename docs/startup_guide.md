@@ -1,8 +1,8 @@
 # Startup Guide / 启动指南
 
-This guide runs an isolated local research and paper-trading environment. It does not enable broker execution or the paused production acceptance window.
+Run an isolated local research and paper-trading environment. Broker submission and optional observation collection stay disabled.
 
-本指南用于本地研究与模拟交易，不启用券商下单或正式14天灰度窗口。以下命令从仓库根目录运行。
+本指南用于本地研究与模拟交易，默认不启用券商下单及可选观测采集。以下命令从仓库根目录运行。
 
 ## 1. Requirements / 环境要求
 
@@ -50,9 +50,9 @@ The API migration command runs from the API image's configured working directory
 
 ## 4. First administrator / 初始化首个管理员
 
-The application does not ship a shared default login. Use the existing administrator helper without running the soak setup's strategy-adjustment entry point.
+The application does not ship a shared default login. Call only the `ensure_admin` helper below; the module's command-line entry point also adjusts strategy parameters and is not needed for account creation.
 
-项目不提供默认公共密码。下面仅调用已有管理员初始化函数，不运行策略调参、不启用灰度、不发送券商订单。
+项目不提供默认公共密码。下面仅调用已有管理员初始化函数，不运行策略调参、不启用额外采集、不发送券商订单。
 
 ```powershell
 $env:PHASE5_ADMIN_USERNAME = Read-Host "Administrator username"
@@ -151,4 +151,4 @@ docker compose stop
 
 Override `WEB_PORT`, `API_PORT`, `POSTGRES_PORT`, `REDIS_PORT`, `FLOWER_PORT`, `PROMETHEUS_PORT`, or `GRAFANA_PORT` in your local configuration when ports conflict. Use a separate Compose project name when running multiple copies, and do not stop another project's containers.
 
-Advanced broker, DR, and gray-release guides are optional references under `docs/operations/` and `infra/`. Their presence does not mean production acceptance is complete.
+Optional tools: [broker sandbox safety](operations/broker_safety.md), [observation collection](operations/paper_observation.md), [backups](../infra/backup/README.md), and [isolated recovery rehearsal](../infra/dr/README.md). Each requires separate configuration; none is needed for the default research workflow.

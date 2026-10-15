@@ -43,7 +43,7 @@ cat > "${PHASE5_EVIDENCE_DIR}/closeout/closeout_manifest.json" <<EOF
   "api_base_url": "${PHASE5_API_BASE_URL}",
   "daily_snapshot_count": ${DAILY_SNAPSHOT_COUNT},
   "final_report": "final_gray_release_report.json",
-  "strategy_report_template": "docs/operations/phase5_strategy_report_template.md",
+  "strategy_report_template": "docs/operations/strategy_report_template.md",
   "manual_closeout_required": true
 }
 EOF

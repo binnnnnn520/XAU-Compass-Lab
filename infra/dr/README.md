@@ -1,14 +1,13 @@
-# Phase 5 DR Deployment Evidence Stack
+# Isolated Recovery Rehearsal
 
-This directory defines an isolated DR stack for Phase 5 live readiness. It is separate from the normal local
-development compose file and must not share volumes, database names, or container names with the application stack.
+This directory defines an isolated DR stack for exploring PostgreSQL and Redis recovery. It is separate from the application Compose file and must not share volumes, database names, or container names with the application stack.
 
-Targets:
+Components:
 
-- RTO < 1 hour.
-- RPO < 1 hour.
 - PostgreSQL streaming replication with a primary and hot standby replica.
 - Redis Sentinel monitoring a Redis master plus replica.
+
+Measure recovery time (RTO) and recoverable data age (RPO) for your own workload. The verifier's printed RTO/RPO thresholds are reference labels, not measured results and not an availability guarantee.
 
 This is an isolated DR stack. Do not point this stack at production, do not reuse production credentials, and do
 not run restore or failover rehearsals against production data.
@@ -34,7 +33,7 @@ The verification checks:
 
 - the PostgreSQL replica returns `pg_is_in_recovery() = true`;
 - Redis Sentinel resolves `gold-agent-dr-redis` to the Redis master;
-- RTO/RPO targets remain documented with the evidence output.
+- diagnostic output is available for recording alongside measured recovery time and data loss.
 
 ## Stop
 

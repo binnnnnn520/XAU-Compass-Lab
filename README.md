@@ -4,7 +4,7 @@
 
 黄金新闻驱动的研究与模拟交易工具。把新闻、行情、特征、信号、回测和模拟交易串成一个可以检查与复现的研究流程。
 
-本项目适合学习金融数据工程、研究黄金新闻策略，以及验证策略想法。当前目标是开源研究与本地使用
+本项目面向学习金融数据工程、研究黄金新闻策略和验证策略想法的开发者与研究者，可在本地运行和扩展。
 
 ## 它能做什么
 
@@ -25,8 +25,7 @@
 - 新闻情感分类准确率不等于金价涨跌预测准确率。
 - 模型需要合适的数据和已训练的模型文件；缺失模型或校准样本不足时保留安全回退行为。
 - 测试样本和模拟交易结果不能证明长期盈利。研究仍需独立数据、交易成本、滑点和不同市场阶段的评估。
-- IBKR 模拟账户相关工具保留但默认关闭；真实资金交易未启用。
-- 原生产路线的正式14天灰度窗口未执行，Phase 5 保持“暂停、未验收”。
+- IBKR 模拟账户工具默认关闭，需单独配置并由操作者监督使用；真实资金交易未启用。
 
 ## 快速开始
 
@@ -94,11 +93,11 @@ npm --prefix apps/web run build
 - [架构概览](docs/architecture/01_overview.md)与[模块说明](docs/architecture/02_modules.md)
 - [数据库设计](docs/architecture/03_database.md)与[REST API](docs/architecture/04_api.md)
 - [风险与工程约束](docs/architecture/05_tasks_risk.md)
-- [当前状态与研究限制](docs/production_upgrade_status.md)
-- [开源发布验证](docs/release_verification.md)
+- [功能说明与研究限制](docs/capabilities.md)
+- [测试与验证](docs/testing.md)
 - [贡献指南](CONTRIBUTING.md)
 
-高级操作手册位于 `docs/operations/`，描述需要单独选择启用的流程，不属于默认启动步骤。
+可选工具：[券商模拟账户安全](docs/operations/broker_safety.md)、[观测数据采集](docs/operations/paper_observation.md)、[IBKR 模拟平仓检查](docs/operations/ibkr_paper_verification.md)及[研究报告模板](docs/operations/strategy_report_template.md)。这些工具不属于默认启动步骤。
 
 ## 许可证
 

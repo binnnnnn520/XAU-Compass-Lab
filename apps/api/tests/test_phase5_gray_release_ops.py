@@ -98,7 +98,7 @@ def test_phase5_local_wsl_tmux_starter_runs_formal_minimal_stack_and_snapshot_lo
 
 
 def test_phase5_gray_release_runbook_allows_automated_daily_snapshots_with_later_review() -> None:
-    runbook = REPO_ROOT / "docs" / "operations" / "phase5_gray_release_server_runbook.md"
+    runbook = REPO_ROOT / "docs" / "operations" / "paper_observation.md"
 
     content = runbook.read_text(encoding="utf-8")
     lower_content = content.lower()
@@ -109,11 +109,11 @@ def test_phase5_gray_release_runbook_allows_automated_daily_snapshots_with_later
     assert "infra/phase5/finalize_gray_release_window.sh" in content
     assert "automated daily snapshot" in lower_content
     assert "missed manual review" in lower_content
-    assert "does not invalidate the window by itself" in lower_content
+    assert "cannot prove continuous availability" in lower_content
     assert "catch-up review" in lower_content
     assert "PHASE5_COMPOSE_SERVICES" in content
     assert "postgres redis api worker beat" in content
-    assert "2c2g" in lower_content
+    assert "enough memory" in lower_content
     assert "start_local_wsl_tmux_gray_release.sh" in content
     assert "preflight_local_wsl_gray_release.sh" in content
     assert "Windows GUI" in content

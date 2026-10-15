@@ -1,7 +1,6 @@
 # PostgreSQL Backup And Restore Rehearsal
 
-These scripts provide the Phase 3 PostgreSQL backup baseline for the MVP
-production upgrade. They are for backup creation and restore rehearsal only.
+Use these scripts to create PostgreSQL backups and rehearse restores in an isolated database. They do not configure automated database failover.
 
 ## Create A Backup
 

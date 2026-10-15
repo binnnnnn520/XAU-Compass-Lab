@@ -4,7 +4,7 @@
 
 A gold-news research and paper-trading tool connecting news, market data, features, signals, backtesting, and simulated execution in an inspectable research workflow.
 
-Use it to learn financial data engineering, investigate gold-news strategies, and test trading hypotheses. The current focus is open-source research and local use; paid-product deployment and real-money trading are paused.
+For developers and researchers learning financial data engineering, investigating gold-news strategies, and testing trading hypotheses. Run it locally and extend the workflow for your own experiments.
 
 ## Capabilities
 
@@ -25,8 +25,7 @@ News and market data → Analysis → Features → Signals → Backtest / Paper 
 - News-sentiment classification accuracy is not gold-price prediction accuracy.
 - Models require suitable data and fitted artifacts. Missing models or insufficient calibration samples retain safe fallback behavior.
 - Fixtures and paper-trading results do not establish sustained profitability. Research still needs independent data, trading costs, slippage, and market-regime coverage.
-- IBKR paper-account tooling is retained but disabled by default. Real-money trading is not enabled.
-- The formal 14-day production gray-release window has not been executed. Phase 5 remains paused and unaccepted.
+- IBKR paper-account tools are disabled by default and require separate configuration and operator supervision. Real-money trading is not enabled.
 
 ## Quick start
 
@@ -94,11 +93,11 @@ npm --prefix apps/web run build
 - [Architecture](docs/architecture/01_overview.md) and [modules](docs/architecture/02_modules.md)
 - [Database design](docs/architecture/03_database.md) and [REST API](docs/architecture/04_api.md)
 - [Risk and engineering constraints](docs/architecture/05_tasks_risk.md)
-- [Project status and research limitations](docs/production_upgrade_status.md)
-- [Release verification](docs/release_verification.md)
+- [Capabilities and research limitations](docs/capabilities.md)
+- [Testing and verification](docs/testing.md)
 - [Contributing](CONTRIBUTING.md)
 
-Advanced runbooks live under `docs/operations/`. Their procedures are opt-in and are not part of default startup.
+Optional tools: [broker sandbox safety](docs/operations/broker_safety.md), [observation collection](docs/operations/paper_observation.md), [IBKR paper close-position checks](docs/operations/ibkr_paper_verification.md), and a [research report template](docs/operations/strategy_report_template.md). These are not part of default startup.
 
 ## License
 

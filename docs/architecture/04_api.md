@@ -1,6 +1,6 @@
 # REST API / 接口概览
 
-Base path: `/api/v1`. The running FastAPI application's `/docs` and `/openapi.json` describe current request/response schemas. This release changes documentation and configuration, not REST paths or payload contracts.
+Base path: `/api/v1`. The running FastAPI application's `/docs` and `/openapi.json` describe current request/response schemas. Use those schemas for field-level details and role requirements.
 
 ## Conventions
 
@@ -27,7 +27,7 @@ Base path: `/api/v1`. The running FastAPI application's `/docs` and `/openapi.js
 | GET | `/paper/orders`, `/paper/positions`, `/paper/account` | Simulated orders, positions, and account |
 | GET | `/risk/events`, `/risk/status` | Risk events and status |
 | POST | `/live/emergency-stop` | Guarded emergency-stop operation |
-| GET | `/live/gray-release-report` | Read-only optional evidence report |
+| GET | `/live/gray-release-report` | Read-only optional paper/broker comparison report |
 | WebSocket | `/ws/stream` | Authenticated real-time stream |
 
 `/metrics` is an operational endpoint outside the REST base. The Web application proxies backend traffic through its configured local API origin.
@@ -36,4 +36,4 @@ Base path: `/api/v1`. The running FastAPI application's `/docs` and `/openapi.js
 
 Initialize the first administrator with the [startup guide](../startup_guide.md). Additional accounts are created by an administrator; there is no public self-service registration. Access and refresh tokens have distinct types and uses.
 
-The `/live` namespace is retained for existing tooling and safety contracts. It does not imply enabled real-money trading or completed production acceptance.
+The `/live` namespace exposes optional diagnostics and safety controls. Its name does not imply an enabled real-money broker connection. See [broker sandbox safety](../operations/broker_safety.md) before using the optional tools.

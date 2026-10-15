@@ -29,6 +29,6 @@ Research, backtesting, and paper execution reuse the existing feature and signal
 
 ## Scope
 
-The code includes optional optimization, ensemble, monitoring, backup, DR, and guarded IBKR paper tooling. These capabilities depend on suitable configuration and data; they do not establish predictive advantage or production acceptance.
+The code includes optional optimization, ensemble, monitoring, backup, DR, and guarded IBKR paper tooling. These capabilities depend on suitable configuration and data; their availability does not establish predictive advantage.
 
-Paid deployment, real-money execution, and the formal 14-day acceptance window are paused. See [project status](../production_upgrade_status.md), [startup](../startup_guide.md), [modules](02_modules.md), [database](03_database.md), [API](04_api.md), and [risk contracts](05_tasks_risk.md).
+The default execution path uses virtual funds. Optional broker tools require a separately configured paper account; real-money execution is not enabled. See [capabilities and limitations](../capabilities.md), [startup](../startup_guide.md), [modules](02_modules.md), [database](03_database.md), [API](04_api.md), and [risk contracts](05_tasks_risk.md).
