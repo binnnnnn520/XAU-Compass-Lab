@@ -67,16 +67,6 @@ jobs:
         with:
           node-version: "22"
 
-      - name: Generate initial npm lockfile
-        run: npm install --package-lock-only --ignore-scripts --no-audit --no-fund --prefix apps/web
-
-      - name: Export initial npm lockfile
-        uses: actions/upload-artifact@v4
-        with:
-          name: web-npm-lockfile
-          path: apps/web/package-lock.json
-          retention-days: 1
-
       - name: Install web dependencies
         run: npm ci --prefix apps/web
 
